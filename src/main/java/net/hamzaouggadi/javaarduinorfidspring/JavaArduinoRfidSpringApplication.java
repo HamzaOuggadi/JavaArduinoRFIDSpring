@@ -2,6 +2,7 @@ package net.hamzaouggadi.javaarduinorfidspring;
 
 import com.fazecast.jSerialComm.SerialPort;
 import lombok.extern.slf4j.Slf4j;
+import net.hamzaouggadi.javaarduinorfidspring.serialcomm.ComPortListener;
 import net.hamzaouggadi.javaarduinorfidspring.utils.ApplicationReadyListener;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,7 @@ import java.io.IOException;
 @Slf4j
 public class JavaArduinoRfidSpringApplication {
 
-    private static final String PORT_NAME_MAC = "/dev/tty.usbmodem11201";
+    private static final String PORT_NAME_MAC = "/dev/tty.usbmodem21201";
 
     public static void main(String[] args) {
         SpringApplication.run(JavaArduinoRfidSpringApplication.class, args);
@@ -47,7 +48,30 @@ public class JavaArduinoRfidSpringApplication {
             return;
         }
 
-        int blinks = 5;
+        log.info("COM port opened");
+
+        ComPortListener comPortListener = new ComPortListener();
+
+        serialPort.addDataListener(comPortListener);
+
+        /*byte[] data = new byte[10];
+
+        try {
+            while (true) {
+                if (serialPort.bytesAvailable() > 0) {
+                    serialPort.readBytes(data, 1);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        for (byte b : data) {
+            System.out.print(b);
+        }*/
+
+/*        int blinks = 5;
 
         for (int i = blinks; i > 0; i--) {
             try {
@@ -56,7 +80,7 @@ public class JavaArduinoRfidSpringApplication {
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }
+        }*/
 
     }
 
